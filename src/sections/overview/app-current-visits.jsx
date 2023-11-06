@@ -7,6 +7,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import { fNumber } from 'src/utils/format-number';
 
 import Chart, { useChart } from 'src/components/chart';
+import { red } from '@mui/material/colors';
 
 // ----------------------------------------------------------------------
 

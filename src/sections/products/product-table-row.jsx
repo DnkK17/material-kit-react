@@ -13,11 +13,12 @@ import IconButton from '@mui/material/IconButton';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // ----------------------------------------------------------------------
 
-export default function UserTableRow({
+export default function ProductTableRow({
   id,
   selected,
   name,
@@ -35,7 +36,7 @@ export default function UserTableRow({
   };
 
   const handleCloseMenu = () => {
-    axios.delete(`http://167.172.92.40:8080/api/learner/${id}`);
+    axios.delete(`http://167.172.92.40:8080/api/instructor/${id}`);
     window.location.reload();
     navigate('/user')
     setOpen(null);
@@ -91,8 +92,7 @@ export default function UserTableRow({
   );
 }
 
-UserTableRow.propTypes = {
-  id: PropTypes.any,
+ProductTableRow.propTypes = {
   avatarUrl: PropTypes.any,
   company: PropTypes.any,
   handleClick: PropTypes.func,

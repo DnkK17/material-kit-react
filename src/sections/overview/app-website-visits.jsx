@@ -12,7 +12,7 @@ export default function AppWebsiteVisits({ title, subheader, chart, ...other }) 
   const { labels, colors, series, options } = chart;
 
   const chartOptions = useChart({
-    colors,
+    colors:['#FFA500'],
     plotOptions: {
       bar: {
         columnWidth: '16%',

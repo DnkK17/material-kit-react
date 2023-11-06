@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -9,7 +9,7 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
+import axios from 'axios';
 import { users } from 'src/_mock/user';
 
 import Iconify from 'src/components/iconify';
@@ -21,6 +21,7 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+
 
 // ----------------------------------------------------------------------
 
@@ -86,12 +87,21 @@ export default function UserPage() {
     setFilterName(event.target.value);
   };
 
+  const [learner, setLeaner] = useState([]);
+  const fetchLearner = () => {
+    axios.get('http://167.172.92.40:8080/api/learners').then((res) => {
+      setLeaner(res.data);
+    });
+  };
+  useEffect(() => {
+    fetchLearner();
+  }, []);
   const dataFiltered = applyFilter({
-    inputData: users,
+    inputData: learner,
+
     comparator: getComparator(order, orderBy),
     filterName,
   });
-
   const notFound = !dataFiltered.length && !!filterName;
 
   return (
@@ -99,9 +109,7 @@ export default function UserPage() {
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Users</Typography>
 
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          New User
-        </Button>
+       
       </Stack>
 
       <Card>
@@ -123,9 +131,9 @@ export default function UserPage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
+                  { id: 'email', label: 'Email' },
+                  // { id: 'role', label: 'Role' },
+                  // { id: 'isVerified', label: 'Verified', align: 'center' },
                   { id: 'status', label: 'Status' },
                   { id: '' },
                 ]}
@@ -135,18 +143,15 @@ export default function UserPage() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <UserTableRow
+                    id={row.learnerID}
                       key={row.id}
                       name={row.name}
-                      role={row.role}
+                      role={row.email}
                       status={row.status}
-                      company={row.company}
-                      avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
-                      selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />
                   ))}
-
+                
                 <TableEmptyRows
                   height={77}
                   emptyRows={emptyRows(page, rowsPerPage, users.length)}
@@ -161,7 +166,7 @@ export default function UserPage() {
         <TablePagination
           page={page}
           component="div"
-          count={users.length}
+          count={learner.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}
