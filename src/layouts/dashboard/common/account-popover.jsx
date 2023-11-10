@@ -8,7 +8,7 @@ import { alpha } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { account } from 'src/_mock/account';
 
 // ----------------------------------------------------------------------
@@ -16,7 +16,7 @@ import { account } from 'src/_mock/account';
 const MENU_OPTIONS = [
   {
     label: 'Home',
-    icon: 'eva:home-fill',
+    link: '/ ',
   },
   {
     label: 'Profile',
@@ -38,7 +38,7 @@ export default function AccountPopover() {
   };
 
   const handleClose = () => {
-    navigate('/login');
+   setOpen(null);
   };
 
   return (
@@ -56,7 +56,7 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={account.photoURL}
+          src={account.photoURL}e
           alt={account.displayName}
           sx={{
             width: 36,
@@ -96,7 +96,7 @@ export default function AccountPopover() {
 
         {MENU_OPTIONS.map((option) => (
           <MenuItem key={option.label} onClick={handleClose}>
-            {option.label}
+            <Link to={option.link}>{option.label}</Link>
           </MenuItem>
         ))}
 

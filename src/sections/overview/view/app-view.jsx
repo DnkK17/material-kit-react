@@ -40,25 +40,25 @@ const fetchEnrollment = () =>{
   
 }
 const [date,setDate] = useState([]);
-const fetchTestData = () => {
-  axios.get('http://167.172.92.40:8080/api/test')
-    .then(response => {
-      const filteredData = response.data.filter(item => {
-        const date = new Date(item.date);
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1; // Adding 1 to match the format "2023-11"
+// const fetchTestData = () => {
+//   axios.get('http://167.172.92.40:8080/api/test')
+//     .then(response => {
+//       const filteredData = response.data.filter(item => {
+//         const date = new Date(item.date);
+//         const year = date.getFullYear();
+//         const month = date.getMonth() + 1; // Adding 1 to match the format "2023-11"
 
-        const formattedDate = `${year}-${month < 10 ? '0' + month : month}`;
+//         const formattedDate = `${year}-${month < 10 ? '0' + month : month}`;
 
-        return formattedDate === '2023-11'; // Filtering for November 2023
-      });
+//         return formattedDate === '2023-11'; // Filtering for November 2023
+//       });
 
-      console.log("Filtered data:", filteredData);
-    })
-    .catch(error => {
-      console.log("Error:", error);
-    });
-}
+//       console.log("Filtered data:", filteredData);
+//     })
+//     .catch(error => {
+//       console.log("Error:", error);
+//     });
+// }
 
 const [beginner, setBeginner] = useState([]);
 const [intermediate, setIntermediate] = useState([]);
@@ -76,7 +76,8 @@ const nums = courseLevel.map(item => item[1]);
 const num1 = nums[0];
 const num2 = nums[1];
 const num3 = nums[2];
-const num4 = nums[3];
+let num4 = nums[3];
+if(num4==null) num4 = 0; 
 
 const [courseNumber, setCourseNumber] = useState([]);
 const fetchCourseNumber=()=>{
@@ -88,7 +89,6 @@ const fetchCourseNumber=()=>{
 useEffect(()=>{
   fetchCount();
   fetchEnrollment();
-  fetchTestData();
   fetchCountCourse();
   fetchCourseNumber();
 },[]);

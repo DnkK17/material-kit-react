@@ -22,6 +22,11 @@ const navConfig = [
     path: '/products',
     icon: icon('ic_user'),
   },
+  {
+    title:'Courses',
+    path:'/courses',
+    icon: icon('ic_analytics'),
+  }
   // {
   //   title: 'blog',
   //   path: '/blog',
